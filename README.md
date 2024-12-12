@@ -1,0 +1,2 @@
+# pixelwalkerbot
+Bot for pixelwalker
