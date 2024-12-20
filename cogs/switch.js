@@ -1,4 +1,3 @@
-import { CommandArgNumber } from "../command";
 
 addCommand("switch", "Turn a switch on or off")
 	.addArg(new CommandArgNumber("id", "Id to switch (-1 for all)", false, -1, 999, 1))

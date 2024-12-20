@@ -35,6 +35,7 @@ global.room = room;
 room.on("close", ({ status, reason }) => {
 	console.log(`WS Closed: ${status} ${reason}`);
 	process.exit(1);
+	// setTimeout(() => room.reconnect(), 1000);
 });
 
 room.chat.on("chat", async ({ player, message }) => {
