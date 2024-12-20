@@ -25,7 +25,9 @@ global.addCommand = (name, desc) => {
 };
 
 const client = await Client.fromLogin(process.env.USER, process.env.PASS);
+console.log("Connected client: " + client.id);
 const room = await Room.fromId(client, process.env.ROOM);
+console.log("Connected room: " + room.id);
 
 global.client = client;
 global.room = room;

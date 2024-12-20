@@ -3,7 +3,7 @@ import { Block } from "../pixelwalker/components/structure.js";
 addCommand("getpos", "Get position of a block")
 	.addImpl(async (player, room) => {
 		room.chat.whisper(player, "Place a basic white block to select position");
-		const { x, y, layer, blockOld } = await room.world.waitForBlockPlaced(undefined, player);
+		const { x, y, layer, blockOld } = await room.world.select(undefined, player);
 		room.chat.whisper(player, `Selected position ${x} ${y}`);
 		room.world.set(x, y, layer, blockOld);
 	});
@@ -52,33 +52,21 @@ room.world.on("blockPlaced", ({ player, block, x, y }) => {
 
 addCommand("!copy", "Copy region")
 	.addImpl(async (player, room) => {
-		room.chat.whisper(player, "Place 2 blocks to select rectangular region");
-		const { x: x1, y: y1, layer: layer1, blockOld: blockOld1 } = await room.world.waitForBlockPlaced(undefined, player);
-		room.chat.whisper(player, `Selected first position ${x1} ${y1}`);
-		room.world.set(x1, y1, layer1, blockOld1);
-		const { x: x2, y: y2, layer: layer2, blockOld: blockOld2 } = await room.world.waitForBlockPlaced(undefined, player);
-		room.chat.whisper(player, `Selected second position ${x2} ${y2}`);
-		room.world.set(x2, y2, layer2, blockOld2);
-		const structure = room.world.getSub(x1, y1, x2, y2);
-		if (structure.empty())
+		const { x1, y1, x2, y2 } = await room.world.selectSub(undefined, player);
+		const structure = room.world.getSub(x1, y1, x2, y2).trim();
+		if (structure.size === 0 || structure.empty())
 			throw new Error("Region empty");
-		const copyBuffer = new CopyBuffer(structure.trim());
+		const copyBuffer = new CopyBuffer(structure);
 		copyBuffers.set(player, copyBuffer);
 	});
 
 addCommand("!cut", "Cut region")
 	.addImpl(async (player, room) => {
-		room.chat.whisper(player, "Place 2 blocks to select rectangular region");
-		const { x: x1, y: y1, layer: layer1, blockOld: blockOld1 } = await room.world.waitForBlockPlaced(undefined, player);
-		room.chat.whisper(player, `Selected first position ${x1} ${y1}`);
-		room.world.set(x1, y1, layer1, blockOld1);
-		const { x: x2, y: y2, layer: layer2, blockOld: blockOld2 } = await room.world.waitForBlockPlaced(undefined, player);
-		room.chat.whisper(player, `Selected second position ${x2} ${y2}`);
-		room.world.set(x2, y2, layer2, blockOld2);
-		const structure = room.world.getSub(x1, y1, x2, y2);
-		if (structure.empty())
+		const { x1, y1, x2, y2 } = await room.world.selectSub(undefined, player);
+		const structure = room.world.getSub(x1, y1, x2, y2).trim();
+		if (structure.size === 0 || structure.empty())
 			throw new Error("Region empty");
-		const copyBuffer = new CopyBuffer(structure.trim());
+		const copyBuffer = new CopyBuffer(structure);
 		copyBuffers.set(player, copyBuffer);
 		for (let layer = 0; layer < 2; copyBuffer.structure.layers) {
 			room.world.setArea(x1, y1, x2, y2, layer, new Block());
@@ -93,7 +81,7 @@ addCommand("!paste", "Paste copied region")
 			return;
 		}
 		room.chat.whisper(player, "Place a block to select position");
-		const { x, y, layer, blockOld } = await room.world.waitForBlockPlaced(undefined, player);
+		const { x, y, layer, blockOld } = await room.world.select(undefined, player);
 		room.world.set(x, y, layer, blockOld);
 		copyBuffer.set(x, y, room.world);
 	});
