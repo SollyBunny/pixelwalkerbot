@@ -1,11 +1,10 @@
-import { Block } from "../pixelwalker/components/structure.js";
+import { Block, Structure } from "../pixelwalker/components/structure.js";
 
 addCommand("getpos", "Get position of a block")
 	.addImpl(async (player, room) => {
 		room.chat.whisper(player, "Place a basic white block to select position");
-		const { x, y, layer, blockOld } = await room.world.select(undefined, player);
+		const { x, y } = await room.world.select(player);
 		room.chat.whisper(player, `Selected position ${x} ${y}`);
-		room.world.set(x, y, layer, blockOld);
 	});
 
 class CopyBuffer {
@@ -52,7 +51,7 @@ room.world.on("blockPlaced", ({ player, block, x, y }) => {
 
 addCommand("!copy", "Copy region")
 	.addImpl(async (player, room) => {
-		const { x1, y1, x2, y2 } = await room.world.selectSub(undefined, player);
+		const { x1, y1, x2, y2 } = await room.world.selectSub(player);
 		const structure = room.world.getSub(x1, y1, x2, y2).trim();
 		if (structure.size === 0 || structure.empty())
 			throw new Error("Region empty");
@@ -62,7 +61,7 @@ addCommand("!copy", "Copy region")
 
 addCommand("!cut", "Cut region")
 	.addImpl(async (player, room) => {
-		const { x1, y1, x2, y2 } = await room.world.selectSub(undefined, player);
+		const { x1, y1, x2, y2 } = await room.world.selectSub(player);
 		const structure = room.world.getSub(x1, y1, x2, y2).trim();
 		if (structure.size === 0 || structure.empty())
 			throw new Error("Region empty");
@@ -80,9 +79,8 @@ addCommand("!paste", "Paste copied region")
 			room.chat.whisper(player, "No region copied");
 			return;
 		}
-		room.chat.whisper(player, "Place a block to select position");
-		const { x, y, layer, blockOld } = await room.world.select(undefined, player);
-		room.world.set(x, y, layer, blockOld);
+		room.chat.whisper(player, "Select paste position");
+		const { x, y } = await room.world.select(player);
 		copyBuffer.set(x, y, room.world);
 	});
 
@@ -121,4 +119,12 @@ addCommand("!brush", "Use copied region as brush")
 		}
 		copyBuffer.brush(enabled);
 		room.chat.whisper(player, `Brush ${copyBuffer.brushed ? "enabled" : "disabled"}`);
+	});
+
+addCommand("logo", "Draw logo")
+	.addImpl(async (player, room) => {
+		room.chat.whisper(player, "Select logo position");
+		const { x, y } = await room.world.select(player);
+		const structure = await Structure.fromImage(await room.client.blockManager(), "logo.png", 300, await room.client.blockColorsMap())
+		room.world.setSub(x, y, structure);
 	});
