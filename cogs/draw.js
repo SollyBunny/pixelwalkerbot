@@ -82,6 +82,7 @@ addCommand("!paste", "Paste copied region")
 		room.chat.whisper(player, "Select paste position");
 		const { x, y } = await room.world.select(player);
 		copyBuffer.set(x, y, room.world);
+		room.chat.whisper(player, `Pasted at ${x}, ${y}`);
 	});
 
 addCommand("!offset", "Offset copied region")
@@ -125,6 +126,6 @@ addCommand("logo", "Draw logo")
 	.addImpl(async (player, room) => {
 		room.chat.whisper(player, "Select logo position");
 		const { x, y } = await room.world.select(player);
-		const structure = await Structure.fromImage(await room.client.blockManager(), "logo.png", 300, await room.client.blockColorsMap())
+		const structure = await Structure.fromImage(await room.client.blockManager(), "logo.png", 400, await room.client.blockColorsMap())
 		room.world.setSub(x, y, structure);
 	});
