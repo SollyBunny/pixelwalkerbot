@@ -1,0 +1,49 @@
+<title> Pixelwalker Bot </title>
+
+<script type="importmap">
+	{
+		"imports": {
+			"pocketbase": "./pixelwalker/node_modules/pocketbase/dist/pocketbase.es.mjs",
+			"jwt-decode": "./pixelwalker/node_modules/jwt-decode/build/esm/index.js",
+			"@bufbuild/protobuf": "./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/index.js",
+			"@bufbuild/buf": "./pixelwalker/node_modules/@bufbuild/buf/dist/esm/index.js",
+			"@bufbuild/protobuf/codegenv1": "./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/index.js",
+			"buffer": "./pixelwalker/node_modules/buffer-es6/index.js",
+			"buffer/base64": "./pixelwalker/node_modules/buffer-es6/base64.js"
+		}
+	}
+</script>
+
+<script>
+	globalThis.global = globalThis;
+</script>
+
+<script type="module">
+	import { Buffer } from "buffer";
+	globalThis.Buffer = Buffer;
+</script>
+
+<script type="module" defer src="./index.js"></script>
+
+<h1> Pixelwalker Bot </h1>
+
+user: <input id="user" placeholder="user" type="text"><br>
+pass: <input id="pass" placeholder="pass" type="password"><br>
+room: <input id="room" placeholder="room" type="text"><br>
+<button id="start">Go!</button>
+
+<script defer>
+	const e_user = document.getElementById("user");
+	const e_pass = document.getElementById("pass");
+	const e_room = document.getElementById("room");
+	const e_start = document.getElementById("start");
+	e_user.value = localStorage["pixelwalkerbot/user"] || "";
+	e_pass.value = localStorage["pixelwalkerbot/pass"] || "";
+	e_room.value = localStorage["pixelwalkerbot/room"] || "";
+	e_user.addEventListener("input", () => { localStorage["pixelwalkerbot/user"] = e_user.value; });
+	e_pass.addEventListener("input", () => { localStorage["pixelwalkerbot/pass"] = e_pass.value; });
+	e_room.addEventListener("input", () => { localStorage["pixelwalkerbot/room"] = e_room.value; });
+	e_start.addEventListener("click", () => {
+		start(e_user.value, e_pass.value, e_room.value);
+	});
+</script>
