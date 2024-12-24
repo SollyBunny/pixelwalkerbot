@@ -46,7 +46,6 @@ export async function init(client, room, commands) {
 		if (player.id !== room.players.self.id && !snakePlayers.get(player))
 			return;
 		const snakeNext = snakeNexts.get(block.id);
-		console.log(block.id, snakeNext)
 		if (snakeNext === undefined)
 			return;
 		const newBlock = Block.fromManager(blockManager, snakeNext);
