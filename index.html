@@ -1,87 +1,87 @@
 <title> Pixelwalker Bot </title>
 
-<link rel="preload" href="./index.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/buffer-es6/index.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/buffer-es6/base64.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/buffer-es6/ieee754.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/buffer-es6/isArray.js" as="script">
-<link rel="preload" href="./bot.js" as="script">
-<link rel="preload" href="./pixelwalker/client.js" as="script">
-<link rel="preload" href="./pixelwalker/room.js" as="script">
-<link rel="preload" href="./command.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/pocketbase/dist/pocketbase.es.mjs" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/jwt-decode/build/esm/index.js" as="script">
-<link rel="preload" href="./pixelwalker/endpoints.js" as="script">
-<link rel="preload" href="./pixelwalker/components/structure.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/index.js" as="script">
-<link rel="preload" href="./pixelwalker/protocol/world_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/lib/eventemitter.js" as="script">
-<link rel="preload" href="./pixelwalker/lib/workqueue.js" as="script">
-<link rel="preload" href="./pixelwalker/components/chat.js" as="script">
-<link rel="preload" href="./pixelwalker/components/players.js" as="script">
-<link rel="preload" href="./pixelwalker/components/world.js" as="script">
-<link rel="preload" href="./pixelwalker/lib/bufferreader.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/types.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/is-message.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/create.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/clone.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/descriptors.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/equals.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/fields.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/registry.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/to-binary.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/from-binary.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/to-json.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/from-json.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/extensions.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/proto-int64.js" as="script">
-<link rel="preload" href="./pixelwalker/lib/custommap.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/index.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/scalar.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/reflect.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/index.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/binary-encoding.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/boot.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/embed.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/enum.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/extension.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/file.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/message.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/service.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/symbols.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/scalar.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/types.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/unsafe.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/text-format.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/nested-types.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/names.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/wrappers.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/index.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/reflect-check.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/guard.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/varint.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/error.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/base64-encoding.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/timestamp.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/any.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/api_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/any_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/descriptor_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/duration_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/empty_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/field_mask_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/source_context_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/struct_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/timestamp_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/type_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/wrappers_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/compiler/plugin_pb.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/text-encoding.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/restore-json-names.js" as="script">
-<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/size-delimited.js" as="script">
-<link rel="preload" href="./cogs/draw.js" as="script">
-<link rel="preload" href="./cogs/ping.js" as="script">
-<link rel="preload" href="./cogs/switch.js" as="script">
+<link rel="preload" href="./index.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/buffer-es6/index.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/buffer-es6/base64.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/buffer-es6/ieee754.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/buffer-es6/isArray.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./bot.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/client.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/room.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./command.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/pocketbase/dist/pocketbase.es.mjs" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/jwt-decode/build/esm/index.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/endpoints.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/components/structure.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/index.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/protocol/world_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/lib/eventemitter.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/lib/workqueue.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/components/chat.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/components/players.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/components/world.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/lib/bufferreader.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/types.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/is-message.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/create.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/clone.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/descriptors.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/equals.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/fields.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/registry.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/to-binary.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/from-binary.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/to-json.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/from-json.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/extensions.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/proto-int64.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/lib/custommap.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/index.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/scalar.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/reflect.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/index.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/binary-encoding.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/boot.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/embed.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/enum.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/extension.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/file.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/message.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/service.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/symbols.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/scalar.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/types.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/unsafe.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/text-format.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/nested-types.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/names.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/wrappers.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/index.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/reflect-check.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/guard.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/varint.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/reflect/error.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/base64-encoding.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/timestamp.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/any.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/api_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/any_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/descriptor_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/duration_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/empty_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/field_mask_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/source_context_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/struct_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/timestamp_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/type_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/wrappers_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wkt/gen/google/protobuf/compiler/plugin_pb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/text-encoding.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/restore-json-names.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/wire/size-delimited.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./cogs/draw.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./cogs/ping.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="./cogs/switch.js" as="script" crossorigin="anonymous">
 
 <script type="importmap">
 	{
