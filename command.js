@@ -196,3 +196,16 @@ export class Command {
 		await this.func(player, room, ...args);
 	}
 }
+
+export class Commands {
+	constructor() {
+		this.commands = {}
+	}
+	add(name, desc) {
+		if (this.commands[name])
+			throw `Command ${name} already exists`;
+		const command = new Command().addInfo(name, desc);
+		this.commands[name] = command;
+		return command;
+	}
+}
