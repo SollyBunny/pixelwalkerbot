@@ -36,8 +36,8 @@ export async function start(USER, PASS, ROOM) {
 	}));
 	console.log("Loaded all cogs");
 
-	room.on("close", ({ status, reason }) => {
-		console.log(`WS Closed: ${status} ${reason}`);
+	room.on("close", reason => {
+		console.log(`Closed: ${reason}`);
 		// setTimeout(() => room.reconnect(), 1000);
 	});
 
@@ -62,5 +62,7 @@ export async function start(USER, PASS, ROOM) {
 			console.error(e);
 		}
 	});
+
+	return { client, room, commands };
 
 }

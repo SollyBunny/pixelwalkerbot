@@ -33,6 +33,8 @@ room: <input id="room" placeholder="room" type="text"><br>
 <button id="start">Go!</button>
 
 <script defer>
+	let client, room, commands;
+	let connecting = false;
 	const e_user = document.getElementById("user");
 	const e_pass = document.getElementById("pass");
 	const e_room = document.getElementById("room");
@@ -43,7 +45,17 @@ room: <input id="room" placeholder="room" type="text"><br>
 	e_user.addEventListener("input", () => { localStorage["pixelwalkerbot/user"] = e_user.value; });
 	e_pass.addEventListener("input", () => { localStorage["pixelwalkerbot/pass"] = e_pass.value; });
 	e_room.addEventListener("input", () => { localStorage["pixelwalkerbot/room"] = e_room.value; });
-	e_start.addEventListener("click", () => {
-		start(e_user.value, e_pass.value, e_room.value);
+	e_start.addEventListener("click", async () => {
+		if (connecting) return;
+		connecting = true;
+		try {
+			if (room) {
+				room.close();
+				room = client = commands = undefined;
+			}
+			({ client, room, commands } = await start(e_user.value, e_pass.value, e_room.value));
+		} finally {
+			connecting = false;
+		}
 	});
 </script>
