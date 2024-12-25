@@ -8,7 +8,7 @@ globalThis.CommandArgBool = CommandArgBool;
 globalThis.CommandArgNumber = CommandArgNumber;
 globalThis.CommandArgChoice = CommandArgChoice;
 
-const cogNames = ["draw", "ping", "switch", "snake"];
+const cogNames = ["draw", "ping", "switch", "snake", "freeperm"];
 const cogs = await Promise.all(cogNames.map(async name => {
 	const cog = await import(`./cogs/${name}.js`);
 	if (!cog.name)
