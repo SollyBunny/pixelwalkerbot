@@ -20,9 +20,14 @@ const cogs = await Promise.all(cogNames.map(async name => {
 
 export async function start(USER, PASS, ROOM) {
 	
-	const client = await Client.fromLogin(USER, PASS);
+	const client = new Client();
+	await Promise.all([
+		client.init(),
+		client.authWithCredentials(USER, PASS)
+	]);
 	console.log("Connected client: " + client.id);
-	const room = await Room.fromId(client, ROOM);
+	const room = new Room(client);
+	await room.connect(ROOM);
 	console.log("Connected room: " + room.id);
 	
 	const commands = new Commands();
