@@ -19,13 +19,11 @@ function muxInt16(high, low) {
 
 export async function init(client, room, commands) {
 
-	const blockManager = await client.blockManager();
-
 	const snakeNexts = new Map();
 	for (const [prefix, snake] of Object.entries(snakes)) {
 		for (let i = 0; i < snake.length; ++i) {
-			const id1 = blockManager.id(i === 0 ? "empty" : `${prefix}_${snake[i - 1]}`);
-			const id2 = blockManager.id(`${prefix}_${snake[i]}`);
+			const id1 = client.blockManager.id(i === 0 ? "empty" : `${prefix}_${snake[i - 1]}`);
+			const id2 = client.blockManager.id(`${prefix}_${snake[i]}`);
 			snakeNexts.set(id2, id1);
 		}
 	}
@@ -43,12 +41,12 @@ export async function init(client, room, commands) {
 			clearTimeout(timeout);
 			snakeBlocks.delete(hash);
 		}
-		if (player.id !== room.players.self.id && !snakePlayers.get(player))
+		if (player.id === room.players.self.id ? timeout === undefined : !snakePlayers.get(player))
 			return;
 		const snakeNext = snakeNexts.get(block.id);
 		if (snakeNext === undefined)
 			return;
-		const newBlock = Block.fromManager(blockManager, snakeNext);
+		const newBlock = Block.fromManager(client.blockManager, snakeNext);
 		snakeBlocks.set(hash, setTimeout(() => {
 			room.world.set(x, y, LAYER_FOREGROUND, newBlock);
 		}, 400));
@@ -60,7 +58,7 @@ export async function init(client, room, commands) {
 			if (enabled === undefined)
 				enabled = !snakePlayers.get(player);
 			snakePlayers.set(player, enabled);
-			room.chat.whisper(player, `Snake ${enabled ? "enabled" : "disabled"}`)
+			room.chat.whisper(player, `Snake ${enabled ? "enabled" : "disabled"}`);
 		});
 
 }
