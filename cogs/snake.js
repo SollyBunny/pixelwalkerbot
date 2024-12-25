@@ -36,22 +36,24 @@ export async function init(client, room, commands) {
 	room.players.on("leave", ({ player }) => {
 		snakePlayers.delete(player);
 	});
-	room.world.on("blockPlaced", ({ player, block, x, y }) => {
+	room.world.on("blockPlacedGroup", ({ player, block, positions }) => {
 		if (block.empty()) return;
-		const hash = muxInt16(x, y);
-		const timeout = snakeBlocks.get(hash);
-		if (timeout) {
-			clearTimeout(timeout);
-			snakeBlocks.delete(hash);
-		}
-		if (player.id === room.players.self.id ? timeout === undefined : !snakePlayers.get(player))
-			return;
 		const snakeNext = snakeNexts.get(block.id);
 		if (snakeNext === undefined)
 			return;
-		snakeBlocks.set(hash, setTimeout(() => {
-			room.world.set(x, y, snakeNext);
-		}, 400));
+		for (const { x, y } of positions) {
+			const hash = muxInt16(x, y);
+			const timeout = snakeBlocks.get(hash);
+			if (timeout) {
+				clearTimeout(timeout);
+				snakeBlocks.delete(hash);
+			}
+			if (player.id === room.players.self.id ? timeout === undefined : !snakePlayers.get(player))
+				continue;
+			snakeBlocks.set(hash, setTimeout(() => {
+				room.world.set(x, y, snakeNext);
+			}, 400));
+		}
 	});
 
 	commands.add("snake", "Place any colorful block and watch it slowly go down the rainbow")
