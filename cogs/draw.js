@@ -1,6 +1,6 @@
 export const name = "draw";
 
-import { Block, Structure } from "../pixelwalker/components/structure.js";
+import { Block, LAYER_BACKGROUND, LAYER_COUNT, Structure } from "../pixelwalker/components/structure.js";
 
 let fs;
 if (typeof document === "undefined")
@@ -80,9 +80,8 @@ export async function init(client, room, commands) {
 				throw new Error("Region empty");
 			const copyBuffer = new CopyBuffer(structure);
 			copyBuffers.set(player, copyBuffer);
-			for (let layer = 0; layer < 2; copyBuffer.structure.layers) {
-				room.world.setArea(x1, y1, x2, y2, layer, new Block());
-			}
+			for (let layer = 0; layer < LAYER_COUNT; ++layer)
+				room.world.setArea(x1, y1, x2, y2, new Block(0, layer));
 		});
 
 	commands.add("!paste", "Paste copied region")
@@ -135,14 +134,17 @@ export async function init(client, room, commands) {
 			room.chat.whisper(player, `Brush ${copyBuffer.brushed ? "enabled" : "disabled"}`);
 		});
 
-	commands.add("logo", "Draw logo")
-		.addImpl(async (player, room) => {
+	commands.add("logo", "Draw the pixelwalker logo")
+		.addArg(new CommandArgNumber("Max size", "Max width or height to draw", true, 5, () => Math.max(room.world.width, room.world.height), 1))
+		.addImpl(async (player, room, maxsize) => {
 			room.chat.whisper(player, "Select logo position");
+			maxsize = maxsize ?? 50;
 			const { x, y } = await room.world.select(player);
 			const structure = await Structure.fromImage(
 				await getFile("./logo.png"),
-				400, room.client.blockManager, room.client.blockColors
+				maxsize, room.client.blockManager, room.client.blockColors
 			);
+			room.chat.whisper(player, `Drawing logo at ${x}, ${y}. Max size is ${maxsize}`)
 			room.world.setSub(x, y, structure);
 		});
 
