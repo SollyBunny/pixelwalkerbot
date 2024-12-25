@@ -21,10 +21,13 @@ export async function init(client, room, commands) {
 
 	const snakeNexts = new Map();
 	for (const [prefix, snake] of Object.entries(snakes)) {
-		for (let i = 0; i < snake.length; ++i) {
-			const id1 = client.blockManager.id(i === 0 ? "empty" : `${prefix}_${snake[i - 1]}`);
-			const id2 = client.blockManager.id(`${prefix}_${snake[i]}`);
-			snakeNexts.set(id2, id1);
+		let blockLast = new Block(0, LAYER_FOREGROUND);
+		for (const part of snake) {
+			const blockThis = Block.fromManager(client.blockManager, `${prefix}_${part}`);
+			if (blockThis === undefined || blockThis.empty())
+				continue;
+			snakeNexts.set(blockThis.id, blockLast);
+			blockLast = blockThis;
 		}
 	}
 
@@ -46,9 +49,8 @@ export async function init(client, room, commands) {
 		const snakeNext = snakeNexts.get(block.id);
 		if (snakeNext === undefined)
 			return;
-		const newBlock = Block.fromManager(client.blockManager, snakeNext);
 		snakeBlocks.set(hash, setTimeout(() => {
-			room.world.set(x, y, LAYER_FOREGROUND, newBlock);
+			room.world.set(x, y, snakeNext);
 		}, 400));
 	});
 
