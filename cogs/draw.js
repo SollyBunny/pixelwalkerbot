@@ -141,7 +141,7 @@ export async function init(client, room, commands) {
 			const { x, y } = await room.world.select(player);
 			const structure = await Structure.fromImage(
 				await getFile("./logo.png"),
-				400, await room.client.blockManager(), await room.client.blockColorsMap()
+				400, room.client.blockManager, room.client.blockColors
 			);
 			room.world.setSub(x, y, structure);
 		});
