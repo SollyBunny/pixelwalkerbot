@@ -4,9 +4,9 @@ export async function init(client, room, commands) {
 
 	room.players.on("join", ({ player }) => {
 		if (room.freeEdit)
-			room.players.setCanEdit(true);
+			player.setCanEdit(true);
 		if (room.freeGod)
-			room.players.setCanGod(true);
+			player.setCanGod(true);
 	});
 
 	commands.add("freeedit", "Give everyone edit")
@@ -24,7 +24,7 @@ export async function init(client, room, commands) {
 		.addImpl(async (player, room, enabled) => {
 			if (!player.owner) return;
 			room.freeGod = enabled === undefined ? !room.freeGod : enabled;
-			room.chat.send(`Free God ${room.freeEdit ? "Enabled" : "Disabled"}`);
+			room.chat.send(`Free God ${room.freeGod ? "Enabled" : "Disabled"}`);
 			if (room.freeGod)
 				room.chat.send("/givegod @a");
 		});
