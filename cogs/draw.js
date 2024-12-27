@@ -1,6 +1,8 @@
 export const name = "draw";
 
 import { Block, LAYER_BACKGROUND, LAYER_COUNT, Structure } from "../pixelwalker/components/structure.js";
+import { Rect } from "../pixelwalker/lib/rect.js";
+import { Room } from "../pixelwalker/room.js";
 
 let fs;
 if (typeof document === "undefined")
@@ -55,11 +57,16 @@ export async function init(client, room, commands) {
 		copyBuffer.set(x, y, room.world);
 	});
 
-	commands.add("getpos", "Get position of a block")
+	commands.add("inspect", "Inpsect block")
 		.addImpl(async (player, room) => {
-			room.chat.whisper(player, "Place a basic white block to select position");
-			const { x, y } = await room.world.select(player);
-			room.chat.whisper(player, `Selected position ${x} ${y}`);
+			room.chat.whisper(player, "Place a block to select position");
+			const { x, y, blockOld: block } = await room.world.select(player);
+			room.chat.whisper(player, `Selected position ${x}, ${y}`);
+			room.chat.whisper(player, `${client.blockManager.name(block.id)} (${block.id})`);
+			if (block.properties) {
+				for (const [name, value] of Object.entries(block.properties))
+					room.chat.whisper(player, `${name}: ${value}`);
+			}
 		});
 
 	commands.add("!copy", "Copy region")
@@ -136,16 +143,38 @@ export async function init(client, room, commands) {
 
 	commands.add("logo", "Draw the pixelwalker logo")
 		.addArg(new CommandArgNumber("Max size", "Max width or height to draw", true, 5, () => Math.max(room.world.width, room.world.height), 1))
-		.addImpl(async (player, room, maxsize) => {
+		.addImpl(async (player, room, maxsize, bg) => {
+			bg = bg ?? false;
 			room.chat.whisper(player, "Select logo position");
 			maxsize = maxsize ?? 50;
 			const { x, y } = await room.world.select(player);
 			const structure = await Structure.fromImage(
-				await getFile("./logo.png"),
-				maxsize, room.client.blockManager, room.client.blockColors
+				await getFile("./tetris.png"),
+				maxsize, room.client.blockManager,
+				room.client.blockColors
 			);
 			room.chat.whisper(player, `Drawing logo at ${x}, ${y}. Max size is ${maxsize}`)
 			room.world.setSub(x, y, structure);
+		});
+
+	commands.add("pastefromworld", "Copy a section from a world")
+		.addArg(new CommandArgString("id", "World Id", false))
+		.addArg(new CommandArgNumber("x1", "x1", true, 0, undefined, 1))
+		.addArg(new CommandArgNumber("y1", "y1", true, 0, undefined, 1))
+		.addArg(new CommandArgNumber("x2", "x2", true, 0, undefined, 1))
+		.addArg(new CommandArgNumber("y2", "y2", true, 0, undefined, 1))
+		.addImpl(async (player, room, id, x1, y1, x2, y2) => {
+			if (!player.owner) return;
+			room.chat.whisper(player, `Getting data from ${id}`);
+			const roomNew = new Room(client);
+			await roomNew.connect(id);
+			const rect = new Rect(x1, y1, x2 ?? room.world.width, y2 ?? room.world.height);
+			const structure = roomNew.world.getSub(rect.x1, rect.y1, rect.x2, rect.y2);
+			roomNew.close("Finished getting sub structure");
+			room.chat.whisper(player, "Select position to put structure");
+			const { x, y } = await room.world.select(player);
+			room.world.setSub(x, y, structure);
+			room.chat.whisper(player, `Pasted at ${x}, ${y}`);
 		});
 
 }
