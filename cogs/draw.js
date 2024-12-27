@@ -149,7 +149,7 @@ export async function init(client, room, commands) {
 			maxsize = maxsize ?? 50;
 			const { x, y } = await room.world.select(player);
 			const structure = await Structure.fromImage(
-				await getFile("./tetris.png"),
+				await getFile("./imgs/logo.png"),
 				maxsize, room.client.blockManager,
 				room.client.blockColors
 			);
