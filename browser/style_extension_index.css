@@ -1,0 +1,38 @@
+body {
+	overflow: hidden !important;
+}
+
+header, dialog {
+	display: none !important;
+}
+
+.content {
+	padding: 0 !important;
+}
+
+main {
+	display: block !important;
+}
+
+.game {
+	scale: 1 !important;
+}
+
+iframe[title="PixelWalker"] {
+	position: absolute !important;
+	left: 0 !important;
+	top: 0 !important;
+	width: 100vw !important;
+	height: 100vh !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.hamburger-container > button {
+	top: 0 !important;
+	left: 0 !important;
+	border: none !important;
+	background: none !important;
+	color: white !important;
+	width: min-content !important;
+}

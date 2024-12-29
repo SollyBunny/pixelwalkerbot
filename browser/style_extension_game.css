@@ -1,0 +1,5 @@
+.ui > .sidebar,
+.ui > .game > .toolbar,
+.smiley-selector, .chat-box {
+	background: rgba(0, 0, 0, 0.7) !important;
+}

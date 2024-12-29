@@ -1,0 +1,24 @@
+{
+	"manifest_version": 3,
+	"name": "Pixelwalker Bot",
+	"version": "1.0",
+	"permissions": ["activeTab"],
+	"content_scripts": [
+		{
+			"matches": ["https://pixelwalker.net/", "https://pixelwalker.net/world/*"],
+			"css": ["browser/style_extension_index.css"]
+		},
+		{
+			"matches": ["https://client.pixelwalker.net/game.html"],
+			"css": ["browser/style_extension_game.css"],
+			"js": ["index.js"],
+			"all_frames": true
+		}
+	],
+	"icons": {
+		"16": "favicon.png",
+		"48": "favicon.png",
+		"128": "favicon.png"
+	}
+  }
+  
