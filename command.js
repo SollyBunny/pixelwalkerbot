@@ -208,4 +208,15 @@ export class Commands {
 		this.commands[name] = command;
 		return command;
 	}
+	async exec(player, room, message) {
+		const index = message.indexOf(" ");
+		const cmd = message.slice(0, index === -1 ? undefined : index).toLowerCase();
+		const args = index === -1 ? "" : message.slice(index + 1);
+		if (!this.commands[cmd]) {
+			if (cmd.length && /^[a-z_!]+$/.test(cmd))
+				throw { message: `No such command ${cmd}` };
+			return;
+		}
+		await this.commands[cmd].exec(player, room, args);
+	}
 }

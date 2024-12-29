@@ -18,18 +18,19 @@ const cogs = await Promise.all(cogNames.map(async name => {
 	return cog;
 }));
 
-export async function start(USER, PASS, ROOM) {
-	
+export async function createClient(USER, PASS) {
 	const client = new Client();
 	await Promise.all([
 		client.init(),
 		client.authWithCredentials(USER, PASS)
 	]);
-	console.log("Connected client: " + client.id);
+	return client;
+}
+
+export async function joinRoom(client, ROOM) {
 	const room = new Room(client);
 	await room.connect(ROOM);
-	console.log("Connected room: " + room.id);
-	
+
 	const commands = new Commands();
 	await Promise.all(cogs.map(async cog => {
 		try {
@@ -39,35 +40,21 @@ export async function start(USER, PASS, ROOM) {
 			throw e;
 		}
 	}));
-	console.log("Loaded all cogs");
-
-	room.on("close", reason => {
-		console.log(`Closed: ${reason}`);
-		// setTimeout(() => room.reconnect(), 1000);
-	});
 
 	room.chat.on("chat", async ({ player, message }) => {
-		if (player.id === room.players.self.id)
-			return;
 		if (!message.startsWith("!"))
 			return;
-		const index = message.indexOf(" ");
-		const cmd = message.slice(1, index === -1 ? undefined : index).toLowerCase();
-		const args = index === -1 ? "" : message.slice(index + 1);
-		if (!commands.commands[cmd]) {
-			if (cmd.length && /^[a-z_!]+$/.test(cmd))
-				room.chat.whisper(player, `No such command ${cmd}`);
-			return;
-		}
 		try {
-			await commands.commands[cmd].exec(player, room, args);
-		} catch (e) {
-			room.chat.whisper(player, `Failed to run command ${cmd}`);
-			room.chat.whisper(player, e.message);
-			console.error(e);
+			await commands.exec(player, room, message.slice(1));
+		} catch (error) {
+			if (error instanceof Error) {
+				room.chat.whisper(player, error.message);
+				console.error(error);
+			} else {
+				room.chat.whisper(player, error);
+			}
 		}
 	});
 
 	return { client, room, commands };
-
 }
