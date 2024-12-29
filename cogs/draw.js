@@ -158,23 +158,39 @@ export async function init(client, room, commands) {
 		});
 
 	commands.add("pastefromworld", "Copy a section from a world")
-		.addArg(new CommandArgString("id", "World Id", false))
-		.addArg(new CommandArgNumber("x1", "x1", true, 0, undefined, 1))
-		.addArg(new CommandArgNumber("y1", "y1", true, 0, undefined, 1))
-		.addArg(new CommandArgNumber("x2", "x2", true, 0, undefined, 1))
-		.addArg(new CommandArgNumber("y2", "y2", true, 0, undefined, 1))
-		.addImpl(async (player, room, id, x1, y1, x2, y2) => {
-			if (!player.owner) return;
-			room.chat.whisper(player, `Getting data from ${id}`);
-			const roomNew = new Room(client);
-			await roomNew.connect(id);
-			const rect = new Rect(x1, y1, x2 ?? room.world.width, y2 ?? room.world.height);
-			const structure = roomNew.world.getSub(rect.x1, rect.y1, rect.x2, rect.y2);
-			roomNew.close("Finished getting sub structure");
-			room.chat.whisper(player, "Select position to put structure");
-			const { x, y } = await room.world.select(player);
+	.addArg(new CommandArgString("id", "World Id", false))
+	.addArg(new CommandArgNumber("x1", "x1", true, 0, undefined, 1))
+	.addArg(new CommandArgNumber("y1", "y1", true, 0, undefined, 1))
+	.addArg(new CommandArgNumber("x2", "x2", true, 0, undefined, 1))
+	.addArg(new CommandArgNumber("y2", "y2", true, 0, undefined, 1))
+	.addImpl(async (player, room, id, x1, y1, x2, y2) => {
+		if (!player.owner) return;
+		room.chat.whisper(player, `Getting data from ${id}`);
+		const roomNew = new Room(client);
+		await roomNew.connect(id);
+		const rect = new Rect(x1, y1, x2 ?? room.world.width, y2 ?? room.world.height);
+		const structure = roomNew.world.getSub(rect.x1, rect.y1, rect.x2, rect.y2);
+		roomNew.close("Finished getting sub structure");
+		room.chat.whisper(player, "Select position to put structure");
+		const { x, y } = await room.world.select(player);
+		room.world.setSub(x, y, structure);
+		room.chat.whisper(player, `Pasted at ${x}, ${y}`);
+	});
+
+	commands.add("signature", "Signature")
+		.addArg(new CommandArgNumber("x", "x", false, 0, undefined, 1))
+		.addArg(new CommandArgNumber("y", "y", false, 0, undefined, 1))
+		.addImpl(async (player, room, x, y) => {
+			if (player.username !== "SOLLYBUNNY") return;
+			room.chat.whisper(player, "Select logo position");
+			const maxsize = 60;
+			const structure = await Structure.fromImage(
+				await getFile("./imgs/signature.png"),
+				maxsize, room.client.blockManager,
+				room.client.blockColors
+			);
+			room.chat.whisper(player, `Drawing logo at ${x}, ${y}. Max size is ${maxsize}`)
 			room.world.setSub(x, y, structure);
-			room.chat.whisper(player, `Pasted at ${x}, ${y}`);
 		});
 
 }
