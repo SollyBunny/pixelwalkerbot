@@ -1,0 +1,11 @@
+{
+	"imports": {
+		"pocketbase": "./pixelwalker/node_modules/pocketbase/dist/pocketbase.es.mjs",
+		"jwt-decode": "./pixelwalker/node_modules/jwt-decode/build/esm/index.js",
+		"@bufbuild/protobuf": "./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/index.js",
+		"@bufbuild/buf": "./pixelwalker/node_modules/@bufbuild/buf/dist/esm/index.js",
+		"@bufbuild/protobuf/codegenv1": "./pixelwalker/node_modules/@bufbuild/protobuf/dist/esm/codegenv1/index.js",
+		"buffer": "./pixelwalker/node_modules/buffer-es6/index.js",
+		"buffer/base64": "./pixelwalker/node_modules/buffer-es6/base64.js"
+	}
+}
